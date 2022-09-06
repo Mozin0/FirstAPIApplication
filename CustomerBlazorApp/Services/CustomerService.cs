@@ -57,8 +57,7 @@ namespace CustomerBlazorApp.Services
         public async Task UpdateCustomer(int id, Customer customer)
         {
            var response = await _httpClient.PutAsJsonAsync($"api/Customers/{id}", customer);
-            await response.Content.ReadFromJsonAsync<Customer>();
-            response.EnsureSuccessStatusCode();
+           response.EnsureSuccessStatusCode();
         }
 
         public async Task DeleteCustomer(int id)

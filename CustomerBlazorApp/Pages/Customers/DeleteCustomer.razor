@@ -1,0 +1,28 @@
+﻿@page "/deletecustomer/{Id}"
+@using CustomerBlazorApp.Services
+@inject CustomerService customerService
+@inject NavigationManager NavigationManager
+
+<h3>DeleteCustomer</h3>
+<h1>Are You sure you want to delete this customer?</h1>
+<button @onclick="@RemoveCustomer">Yes</button>
+<button @onclick="@Cancel">No</button>
+
+@code {
+    [Parameter]
+    public string? Id { get; set; }
+
+    Customer customer = new Customer();
+
+    private async Task RemoveCustomer() {
+        Int32.TryParse(Id, out int result);
+        customer.Id = result;
+        await customerService.DeleteCustomer(result);
+        Cancel();
+    }
+
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("customers");
+    }
+}

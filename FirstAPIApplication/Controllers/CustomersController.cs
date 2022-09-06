@@ -25,7 +25,7 @@ namespace FirstAPIApplication.Controllers
             await _dbContext.SaveChangesAsync();
         }
 
-        [HttpDelete("id")]
+        [HttpDelete("{id:required:int}")]
         public async Task<IActionResult> DeleteCustomer(int id)
         {
             var delete = await _dbContext.Customers.FirstOrDefaultAsync(x => x.Id == id);
@@ -36,7 +36,7 @@ namespace FirstAPIApplication.Controllers
             return NoContent();
         }
 
-        [HttpGet("id")]
+        [HttpGet("{id:required:int}")]
         public async Task<IActionResult> GetCustomerById(int id)
         {
            var customer = await _dbContext.Customers.FirstOrDefaultAsync(x => x.Id == id);
@@ -49,7 +49,7 @@ namespace FirstAPIApplication.Controllers
            return await _dbContext.Customers.ToListAsync();
         }
 
-        [HttpPut("id")]
+        [HttpPut("{id:required:int}")]
         public async Task<IActionResult> UpdateCustomer(int id,Customer customer)
         {
           if (id != customer.Id) return BadRequest();

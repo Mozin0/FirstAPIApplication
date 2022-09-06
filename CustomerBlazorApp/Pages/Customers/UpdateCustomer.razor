@@ -41,13 +41,15 @@
 
     protected override async Task OnInitializedAsync()
     {
-        //Int32.TryParse(Id, out int result);
-        //customer.Id = result;
-        //customer = await customerService.GetCustomerById(customer.Id);
+        Int32.TryParse(Id, out int result);
+        customer.Id = result;
+        customer = await customerService.GetCustomerById(customer.Id);
     }
 
     private async Task EditCustomer() {
-        await customerService.UpdateCustomer(customer.Id, customer);
+        Int32.TryParse(Id, out int result);
+        customer.Id = result;
+        await customerService.UpdateCustomer(result, customer);
         Cancel();
     }
 
