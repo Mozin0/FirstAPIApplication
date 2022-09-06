@@ -1,0 +1,37 @@
+﻿@page "/customers/add"
+@using CustomerBlazorApp.Services
+@inject CustomerService customerService
+@inject NavigationManager NavigationManager
+
+<h3>Add Customer</h3>
+
+<form>
+     <div class="row">
+        <div class="form-group">
+            <label class="control-label" hidden >ID</label>
+            <input class="form-control" hidden @bind="@customer.Id"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <label class="control-label" >Name</label>
+            <input class="form-control" @bind="@customer.Name"/>
+        </div>
+    </div>
+    <input type="button" class="btn-dark" @onclick="@CreateCustomer" value="Save" />
+</form>
+
+@code {
+    Customer customer = new Customer();
+
+    private async Task CreateCustomer() {
+        if (customer == null)
+        {
+            throw new InvalidDataException();
+        }
+        await customerService.AddCustomer(customer);
+
+        NavigationManager.NavigateTo("customers");
+
+    }
+}

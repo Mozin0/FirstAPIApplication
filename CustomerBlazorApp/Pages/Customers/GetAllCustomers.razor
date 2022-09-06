@@ -1,0 +1,48 @@
+﻿@page "/customers"
+@using CustomerBlazorApp.Services
+@inject CustomerService customerService
+
+<h3>Customers</h3>
+<a href="/customers/add">Add Customers</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (customers != null)
+        {
+
+
+            @foreach (var customer in customers)
+            {
+                <tr>
+                    <td>@customer.Id</td>
+                    <td>@customer.Name</td>
+                    <td>
+                        <a href="/editcustomer/@customer.Id">Edit</a>
+                        <a href="/deletecustomer/@customer.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+        @if (customers == null)
+        {
+            <tr>Loading...</tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private IReadOnlyList<Customer>? customers;
+
+    protected override async Task OnInitializedAsync() => await GetCustomers();
+
+    private async Task GetCustomers() {
+        customers = await customerService.GetCustomers();
+    }
+
+}

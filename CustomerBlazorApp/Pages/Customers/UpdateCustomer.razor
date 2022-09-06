@@ -1,0 +1,57 @@
+﻿@page "/editcustomer/{Id}"
+@using CustomerBlazorApp.Services
+@inject CustomerService customerService
+@inject NavigationManager NavigationManager
+
+<h3>Update Customer</h3>
+
+
+<form>
+     <div class="row">
+        <div class="form-group">
+            <label class="control-label"  >Id</label>
+            <input class="form-control" @bind="@customer.Id"/>
+            
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <label class="control-label" >Name</label>
+            <input class="form-control" @bind="@customer.Name"/>
+        </div>
+    </div>
+    <input type="button" class="btn-dark" @onclick="@EditCustomer" value="Update" />
+    <input type="button" class="btn-dark" @onclick="@Cancel" value="Back To List" />
+</form>
+
+
+@code {
+    Customer customer = new Customer();
+
+    [Parameter]
+    public string? Id { get; set; }
+
+    //protected override async Task OnParametersSetAsync()
+    //{
+    //    if (Id != null)
+    //    {
+    //        customer = await customerService.GetCustomerById(customer.Id);
+    //    }
+    //}
+
+    protected override async Task OnInitializedAsync()
+    {
+        //Int32.TryParse(Id, out int result);
+        //customer.Id = result;
+        //customer = await customerService.GetCustomerById(customer.Id);
+    }
+
+    private async Task EditCustomer() {
+        await customerService.UpdateCustomer(customer.Id, customer);
+        Cancel();
+    }
+
+    void Cancel() {
+        NavigationManager.NavigateTo("customers");
+    }
+}
